@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.Gson;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -17,6 +19,7 @@ public class Main extends JavaPlugin {
 	public static Chat chat = null;
 	public static Economy economy = null;
 	public static Board board;
+	public static WorldGuardPlugin wg = null;
 
 	@Override
 	public void onEnable() {
@@ -33,9 +36,10 @@ public class Main extends JavaPlugin {
 		}
 		setupChat();
 		setupEconomy();
+		setupWG();
 		Gson gson = new Gson();
 		board = gson.fromJson(cfg, Board.class);
-		new Scheduler().runTaskTimerAsynchronously(this, 20, 100);
+		new Scheduler().runTaskTimerAsynchronously(this, 20, board.getTick());
 	}
 
 	private boolean setupChat() {
@@ -53,5 +57,12 @@ public class Main extends JavaPlugin {
 			economy = (Economy) economyProvider.getProvider();
 		}
 		return economy != null;
+	}
+	
+	private boolean setupWG() {
+		if(Bukkit.getPluginManager().getPlugin("WorldGuard")!=null) {
+			wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
+		}
+		return wg != null;
 	}
 }

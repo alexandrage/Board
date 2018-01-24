@@ -1,3 +1,4 @@
 name: board
 main: board.Main
 version: 1.0
+depend: [ProtocolLib]

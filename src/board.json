@@ -1,4 +1,5 @@
 {
+  "tick": 20,
   "name": "§e§llocalhost",
   "ls": [
     {
@@ -20,6 +21,10 @@
     {
       "name": "Ранг: {group}",
       "value": 6
+    },
+    {
+      "name": "Регион: {region}",
+      "value": 5
     }
   ]
 }

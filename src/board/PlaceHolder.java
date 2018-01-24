@@ -15,6 +15,9 @@ public class PlaceHolder {
 			input = input.replace("{prefix}", Main.chat.getPlayerPrefix(p));
 			input = input.replace("{group}", Main.chat.getPrimaryGroup(p));
 		}
+		if (Main.wg != null) {
+			input = WG.set(p, input);
+		}
 		return input;
 	}
 }
