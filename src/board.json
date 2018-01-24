@@ -1,0 +1,25 @@
+{
+  "name": "§e§llocalhost",
+  "ls": [
+    {
+      "name": "Имя: {player}",
+      "value": 10
+    },
+    {
+      "name": "Мир: {world}",
+      "value": 9
+    },
+    {
+      "name": "Баланс: {money}",
+      "value": 8
+    },
+    {
+      "name": "Префикс: {prefix}",
+      "value": 7
+    },
+    {
+      "name": "Ранг: {group}",
+      "value": 6
+    }
+  ]
+}
