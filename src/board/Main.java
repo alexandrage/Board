@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
 		setupEconomy();
 		Gson gson = new Gson();
 		board = gson.fromJson(cfg, Board.class);
-		new Scheduler().runTaskTimer(this, 20, 100);
+		new Scheduler().runTaskTimerAsynchronously(this, 20, 100);
 	}
 
 	private boolean setupChat() {
