@@ -20,26 +20,37 @@ public class Main extends JavaPlugin {
 	public static Economy economy = null;
 	public static Board board;
 	public static WorldGuardPlugin wg = null;
-
+	private static Main instance;
+	static Scheduler scheduler;
 	@Override
 	public void onEnable() {
-		String cfg = "[]";
-		File file = new File(this.getDataFolder()+"/board.json");
-		if(!file.exists()) {
-			this.getDataFolder().mkdirs();
-			this.saveResource("board.json", true);
-		}
-		try {
-			cfg = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		instance = this;
+		getCommand("board").setExecutor(new CommandListener());
+		load();
 		setupChat();
 		setupEconomy();
 		setupWG();
-		Gson gson = new Gson();
-		board = gson.fromJson(cfg, Board.class);
-		new Scheduler().runTaskTimerAsynchronously(this, 20, board.getTick());
+	}
+
+	public static void load() {
+		File file = new File(instance.getDataFolder() + "/board.json");
+		if (!file.exists()) {
+			instance.getDataFolder().mkdirs();
+			instance.saveResource("board.json", true);
+		}
+		try {
+			String cfg = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
+			Gson gson = new Gson();
+			if(scheduler!=null) {
+				scheduler.stop();
+				scheduler.cancel();
+			}
+			board = gson.fromJson(cfg, Board.class);
+			scheduler = new Scheduler();
+			scheduler.runTaskTimerAsynchronously(instance, 0, board.getTick());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private boolean setupChat() {
@@ -58,9 +69,9 @@ public class Main extends JavaPlugin {
 		}
 		return economy != null;
 	}
-	
+
 	private boolean setupWG() {
-		if(Bukkit.getPluginManager().getPlugin("WorldGuard")!=null) {
+		if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
 			wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 		}
 		return wg != null;

@@ -14,11 +14,11 @@ public class Scheduler extends BukkitRunnable {
 	@Override
 	public void run() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			send(p, "§e§llocalhost", Main.board.getScore());
+			send(p, Main.board.getName(), Main.board.getScore());
 		}
 	}
 
-	private static WrapperPlayServerScoreboardScore newScore(String objName, String name, int value) {
+	private WrapperPlayServerScoreboardScore newScore(String objName, String name, int value) {
 		WrapperPlayServerScoreboardScore score = new WrapperPlayServerScoreboardScore();
 		score.setObjectiveName(objName);
 		score.setScoreboardAction(ScoreboardAction.CHANGE);
@@ -27,7 +27,17 @@ public class Scheduler extends BukkitRunnable {
 		return score;
 	}
 
-	private static void send(Player t, String display, List<Score> list) {
+	public void stop() {
+		for (Player t : Bukkit.getOnlinePlayers()) {
+			WrapperPlayServerScoreboardObjective remove = new WrapperPlayServerScoreboardObjective();
+			remove.setName("s" + t.getName());
+			remove.setDisplayName(Main.board.getName());
+			remove.setMode(1);
+			remove.sendPacket(t);
+		}
+	}
+
+	private void send(Player t, String display, List<Score> list) {
 		List<WrapperPlayServerScoreboardScore> scores = Lists.newArrayList();
 		for (Score score : list) {
 			scores.add(newScore("s" + t.getName(), PlaceHolder.set(score.getName(), t), score.getValue()));
