@@ -3,6 +3,8 @@ package board;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import board.api.WG;
+
 public class PlaceHolder {
 	public static String set(String input, Player p) {
 		input = input.replace("{player}", p.getName());

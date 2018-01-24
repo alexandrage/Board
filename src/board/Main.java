@@ -12,6 +12,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.google.gson.Gson;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+import board.cmd.CommandListener;
+import board.obj.Board;
+import board.run.Scheduler;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 

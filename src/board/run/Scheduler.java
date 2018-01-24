@@ -1,4 +1,4 @@
-package board;
+package board.run;
 
 import java.util.List;
 
@@ -8,6 +8,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.comphenix.protocol.wrappers.EnumWrappers.ScoreboardAction;
 import com.google.common.collect.Lists;
+
+import board.Main;
+import board.PlaceHolder;
+import board.obj.Score;
+import board.packet.WrapperPlayServerScoreboardDisplayObjective;
+import board.packet.WrapperPlayServerScoreboardObjective;
+import board.packet.WrapperPlayServerScoreboardScore;
 
 public class Scheduler extends BukkitRunnable {
 

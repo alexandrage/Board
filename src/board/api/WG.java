@@ -1,4 +1,4 @@
-package board;
+package board.api;
 
 import java.util.Iterator;
 
@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldguard.bukkit.RegionQuery;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+
+import board.Main;
 
 public class WG {
 	private static RegionQuery rq = Main.wg.getRegionContainer().createQuery();

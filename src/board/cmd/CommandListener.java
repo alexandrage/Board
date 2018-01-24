@@ -1,8 +1,10 @@
-package board;
+package board.cmd;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import board.Main;
 
 public class CommandListener implements CommandExecutor {
 

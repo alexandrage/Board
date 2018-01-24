@@ -1,4 +1,4 @@
-package board;
+package board.obj;
 
 public class Score {
 	private String name;
