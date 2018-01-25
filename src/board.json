@@ -25,6 +25,18 @@
     {
       "name": "Регион: {region}",
       "value": 5
+    },
+        {
+      "name": "Убито игроков: {PLAYER_KILLS}",
+      "value": 4
+    },
+    {
+      "name": "Убито мобов: {MOB_KILLS}",
+      "value": 3
+    },
+    {
+      "name": "Смертей: {DEATHS}",
+      "value": 2
     }
   ]
 }
