@@ -1,10 +1,12 @@
 package board;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
 import board.api.WG;
+import me.clip.placeholderapi.PlaceholderAPI;
 
 public class PlaceHolder {
 	public static String set(String input, Player p) {
@@ -22,6 +24,9 @@ public class PlaceHolder {
 		}
 		if (Main.wg != null) {
 			input = WG.set(p, input);
+		}
+		if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+			input =  PlaceholderAPI.setBracketPlaceholders(p, input);
 		}
 		input = ChatColor.translateAlternateColorCodes('&', input);
 		return input;
