@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.EnumWrappers.ScoreboardAction;
 import com.google.common.collect.Lists;
 
@@ -36,12 +37,13 @@ public class Scheduler extends BukkitRunnable {
 
 	public void stop() {
 		for (Player t : Bukkit.getOnlinePlayers()) {
-			WrapperPlayServerScoreboardObjective remove = new WrapperPlayServerScoreboardObjective();
-			remove.setName("s" + t.getName());
-			remove.setDisplayName(Main.board.getName());
-			remove.setMode(1);
-			remove.sendPacket(t);
+			remove(t, Main.board.getName());
 		}
+	}
+
+	public void remove(Player t, String display) {
+		WrapperPlayServerScoreboardObjective remove = build(t,display,1);
+		remove.sendPacket(t);
 	}
 
 	private void send(Player t, String display, List<Score> list) {
@@ -50,25 +52,29 @@ public class Scheduler extends BukkitRunnable {
 			scores.add(newScore("s" + t.getName(), PlaceHolder.set(score.getName(), t), score.getValue()));
 		}
 
-		WrapperPlayServerScoreboardObjective remove = new WrapperPlayServerScoreboardObjective();
-		remove.setName("s" + t.getName());
-		remove.setDisplayName(display);
-		remove.setMode(1);
-		remove.sendPacket(t);
-
-		WrapperPlayServerScoreboardObjective objective = new WrapperPlayServerScoreboardObjective();
-		objective.setName("s" + t.getName());
-		objective.setDisplayName(display);
-		objective.setMode(0);
-
-		WrapperPlayServerScoreboardDisplayObjective disp = new WrapperPlayServerScoreboardDisplayObjective();
-		disp.setPosition(1);
-		disp.setScoreName("s" + t.getName());
+		remove(t, display);
+		WrapperPlayServerScoreboardObjective objective = build(t, display, 0);
+		WrapperPlayServerScoreboardDisplayObjective disp = build(t);
 		objective.sendPacket(t);
 		disp.sendPacket(t);
 
 		for (WrapperPlayServerScoreboardScore score : scores) {
 			score.sendPacket(t);
 		}
+	}
+
+	private WrapperPlayServerScoreboardObjective build(Player t, String display, int i) {
+		WrapperPlayServerScoreboardObjective obj = new WrapperPlayServerScoreboardObjective();
+		obj.setName("s" + t.getName());
+		obj.setDisplayName(WrappedChatComponent.fromText(display));
+		obj.setMode(i);
+		return obj;
+	}
+	
+	private WrapperPlayServerScoreboardDisplayObjective build(Player t) {
+		WrapperPlayServerScoreboardDisplayObjective disp = new WrapperPlayServerScoreboardDisplayObjective();
+		disp.setPosition(1);
+		disp.setScoreName("s" + t.getName());
+		return disp;
 	}
 }
