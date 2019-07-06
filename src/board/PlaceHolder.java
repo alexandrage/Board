@@ -26,7 +26,7 @@ public class PlaceHolder {
 			input = WG.set(p, input);
 		}
 		if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-			input =  PlaceholderAPI.setBracketPlaceholders(p, input);
+			input =  PlaceholderAPI.setPlaceholders(p, input);
 		}
 		input = ChatColor.translateAlternateColorCodes('&', input);
 		return input;
