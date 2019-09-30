@@ -42,13 +42,11 @@ public class Board {
 
 	public void resetScores(int index) {
 		String string = build(index);
-		System.out.print(string);
-		System.out.print(this.board.getTeam(string));
 		this.board.getTeam(string).unregister();
 		this.board.resetScores(string);
 	}
 	
-	public String build(int index) {
+	private String build(int index) {
 		String hex = Integer.toHexString(index);
 		StringBuilder sb = new StringBuilder();
 		for (char c : hex.toCharArray()) {
