@@ -23,7 +23,7 @@ public class Boards {
 	}
 
 	public void removeBoard(Player player) {
-		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+		player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 		this.boardMap.remove(player.getName());
 	}
 }
