@@ -29,9 +29,9 @@ public class Board {
 	}
 
 	public void setScore(String name, int index) {
-		int length = 62;
-		if (name.length() > length + length) {
-			name = name.substring(0, length + length);
+		int length = 64;
+		if (name.length() > length + length-2) {
+			name = name.substring(0, length + length-2);
 		}
 		String tname = build(index);
 		Team team = this.board.getTeam(tname);
