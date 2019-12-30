@@ -5,17 +5,14 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
 public class Board {
-	private ScoreboardManager manager;
 	private Scoreboard board;
 	private Objective objective;
 
 	public Board(String displayName) {
-		this.manager = Bukkit.getScoreboardManager();
-		this.board = manager.getNewScoreboard();
+		this.board = Bukkit.getScoreboardManager().getNewScoreboard();
 		this.objective = board.registerNewObjective("test", "dummy", displayName);
 		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
