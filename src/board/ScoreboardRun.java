@@ -36,7 +36,6 @@ public class ScoreboardRun extends BukkitRunnable {
 				String suff = trim(this.plugin.chat.getPlayerSuffix(p));
 				Team team = board.getScoreboard().getTeam(p.getName());
 				if (team == null) {
-					System.out.println(team + " -");
 					team = board.getScoreboard().registerNewTeam(p.getName());
 				}
 				team.setPrefix(pref);
