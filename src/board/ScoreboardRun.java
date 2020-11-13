@@ -70,13 +70,13 @@ public class ScoreboardRun extends BukkitRunnable {
 	}
 
 	private String trim(String name) {
-		String color = translateAlternateColorCodes('&', name);
+		String color = translateOld('&', name);
 		if (color.length() > 64)
 			return color.substring(0, 64);
 		return color;
 	}
 
-	private String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
+	private String translateOld(char altColorChar, String textToTranslate) {
 		final char[] b = textToTranslate.toCharArray();
 		for (int i = 0; i < b.length - 1; ++i) {
 			if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
