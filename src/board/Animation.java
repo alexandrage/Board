@@ -2,11 +2,11 @@ package board;
 
 import java.util.List;
 
-public class AnimationToList {
+public class Animation {
 	private List<String> list;
 	private int index;
 
-	public AnimationToList(List<String> list) {
+	public Animation(List<String> list) {
 		this.list = list;
 	}
 

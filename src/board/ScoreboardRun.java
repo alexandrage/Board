@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class ScoreboardRun extends BukkitRunnable {
 	private Main plugin;
 	private Boards boards;
-	private AnimationToList list;
+	private Animation list;
 	private int oldSize;
 
 	public ScoreboardRun(Main plugin, Boards boards) {
@@ -22,7 +22,7 @@ public class ScoreboardRun extends BukkitRunnable {
 		this.boards = boards;
 	}
 
-	public void setList(AnimationToList list) {
+	public void setList(Animation list) {
 		this.list = list;
 	}
 
@@ -78,7 +78,7 @@ public class ScoreboardRun extends BukkitRunnable {
 		char color = 'r';
 		char[] c = pref.toCharArray();
 		for (int i = 0; i < pref.length(); i++) {
-			if (c[i] == '' && i < pref.length()) {
+			if (c[i] == '§' && i < pref.length()) {
 				if (patern.matcher(String.valueOf(new char[] { c[i], c[i + 1] })).matches()) {
 					color = c[i + 1];
 				}
@@ -88,25 +88,14 @@ public class ScoreboardRun extends BukkitRunnable {
 	}
 
 	private String trim(String name) {
-		String color = translateOld('&', name);
+		String color = ChatColor.translateAlternateColorCodes('&', name);
 		if (color.length() > 64)
 			return color.substring(0, 64);
 		return color;
 	}
 
-	private String translateOld(char altColorChar, String textToTranslate) {
-		final char[] b = textToTranslate.toCharArray();
-		for (int i = 0; i < b.length - 1; ++i) {
-			if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
-				b[i] = '';
-				b[i + 1] = Character.toLowerCase(b[i + 1]);
-			}
-		}
-		return new String(b);
-	}
-
 	private static Pattern patern;
 	static {
-		patern = Pattern.compile("(?i)" + String.valueOf('') + "[0-9A-FK-OR]");
+		patern = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-OR]");
 	}
 }
