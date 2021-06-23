@@ -3,10 +3,11 @@ package board;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -52,15 +53,22 @@ public class ScoreboardRun extends BukkitRunnable {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setupTeams(Scoreboard board) {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			String pref = trim(this.plugin.chat.getPlayerPrefix(p));
-			String suff = trim(this.plugin.chat.getPlayerSuffix(p));
+			String pref = color(this.plugin.chat.getPlayerPrefix(p));
+			String suff = color(this.plugin.chat.getPlayerSuffix(p));
 			Team team = board.getTeam(p.getName());
 			if (team == null) {
 				team = board.registerNewTeam(p.getName());
 			}
-			team.setColor(ChatColor.getByChar(this.getColor(pref)));
+			BaseComponent[] temp = TextComponent.fromLegacyText(pref);
+			ChatColor color = ChatColor.getByChar(temp[temp.length - 1].getColor().toString().substring(1));
+			if (color == null) {
+				Color name = Color.decode(temp[temp.length - 1].getColor().getName());
+				color = ColorUtil.fromRGB(name.getRed(), name.getGreen(), name.getBlue());
+			}
+			team.setColor(color);
 			team.setPrefix(pref);
 			team.setSuffix(suff);
 			team.addEntry(p.getName());
@@ -74,28 +82,8 @@ public class ScoreboardRun extends BukkitRunnable {
 		}
 	}
 
-	public char getColor(String pref) {
-		char color = 'r';
-		char[] c = pref.toCharArray();
-		for (int i = 0; i < pref.length(); i++) {
-			if (c[i] == '§' && i < pref.length()) {
-				if (patern.matcher(String.valueOf(new char[] { c[i], c[i + 1] })).matches()) {
-					color = c[i + 1];
-				}
-			}
-		}
-		return color;
-	}
-
-	private String trim(String name) {
+	private String color(String name) {
 		String color = ChatColor.translateAlternateColorCodes('&', name);
-		if (color.length() > 64)
-			return color.substring(0, 64);
 		return color;
-	}
-
-	private static Pattern patern;
-	static {
-		patern = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-OR]");
 	}
 }

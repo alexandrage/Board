@@ -1,6 +1,7 @@
 package board;
 
 import java.util.List;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.milkbowl.vault.chat.Chat;
 
@@ -14,6 +15,7 @@ public class Main extends JavaPlugin implements IBoard {
 	public void onEnable() {
 		this.saveDefaultConfig();
 		this.reloadConfig();
+		this.setupChat();
 		this.boards = new Boards();
 		this.runs = new ScoreboardRun(this, boards);
 		this.runs.setList(new Animation((List<String>) this.getConfig().getList("nameList")));
@@ -31,5 +33,15 @@ public class Main extends JavaPlugin implements IBoard {
 	@Override
 	public void setList() {
 		this.runs.setList(new Animation((List<String>) this.getConfig().getList("nameList")));
+	}
+
+	private boolean setupChat() {
+		@SuppressWarnings("unchecked")
+		final RegisteredServiceProvider<Chat> chatProvider = (RegisteredServiceProvider<Chat>) this.getServer()
+				.getServicesManager().getRegistration((Class) Chat.class);
+		if (chatProvider != null) {
+			this.chat = (Chat) chatProvider.getProvider();
+		}
+		return this.chat != null;
 	}
 }
